@@ -2,7 +2,10 @@ package edu.gmu.project3_ssethi20_anikku;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -42,6 +45,79 @@ public class PlayComputer extends AppCompatActivity
 
     private boolean computerTurn=false;
 
+    int selectedPieceRow=-1;
+    int selectedPieceCol=-1;
+
+    int destinationTileRow=-1;
+    int destinationTileCol=-1;
+
+    public boolean chessPieceSelected()
+    {
+        boolean result=false;
+        if(selectedPieceRow!=-1 && selectedPieceCol!=-1)
+        {
+            result=true;
+        }
+        return result;
+    }
+
+    public boolean chessPieceDestination()
+    {
+        boolean result=false;
+        if(chessPieceSelected()==true)
+        {
+            if(selectedPieceRow!=destinationTileRow && selectedPieceCol!=destinationTileCol)
+            {
+                result=true;
+            }
+        }
+        return result;
+    }
+
+    public void selectChessPiece(int row, int col)
+    {
+        if(chessPieceSelected()==false && computerTurn==false && chessGrid[row][col]==BLANK_SQUARE)
+        {
+            Toast.makeText(getApplicationContext(), "Please select a chess piece", Toast.LENGTH_SHORT).show();
+        }
+
+        else if(chessPieceSelected()==false && computerTurn==false && chessGrid[row][col]==BLACK_ROOK || chessGrid[row][col]==BLACK_KNIGHT || chessGrid[row][col]==BLACK_BISHOP || chessGrid[row][col]==BLACK_QUEEN ||chessGrid[row][col]==BLACK_KING || chessGrid[row][col]==BLACK_PAWN)
+        {
+           Toast.makeText(getApplicationContext(), "You need to select your chess piece", Toast.LENGTH_SHORT).show();
+        }
+
+        else if(computerTurn==false && chessPieceSelected()==false)
+        {
+            selectedPieceRow=row;
+            selectedPieceCol=col;
+            editPieceStartingLocationInApp(selectedPieceRow, selectedPieceCol);
+        }
+    }
+
+    public void selectDestinationLocation(int row, int col)
+    {
+        if(chessPieceSelected()==true && row!=selectedPieceRow && col!=selectedPieceCol)
+        {
+            System.out.println("here2dest");
+            destinationTileRow=row;
+            destinationTileCol=col;
+            editPieceEndingLocationInApp(row, col);
+            selectedPieceRow=-1;
+            selectedPieceCol=-1;
+        }
+    }
+
+    public void editPieceStartingLocationInApp(int row, int col)
+    {
+        TextView selectedPieceStarting=findViewById(R.id.startingLocation);
+        selectedPieceStarting.setText("Row: " + row + " Col: " + col);
+    }
+    public void editPieceEndingLocationInApp(int row, int col)
+    {
+        TextView selectedPieceEnding=findViewById(R.id.endingLocation);
+        selectedPieceEnding.setText("Row: " + row + " Col: " + col);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +125,7 @@ public class PlayComputer extends AppCompatActivity
         //ImageView kingSideTest=findViewById(R.id.imageView53);
         //kingSideTest.setImageResource(R.drawable.white_pawn_darkbg);
         resetGame();
+
     }
 
     public ImageView returnViewById(int row, int col)
@@ -705,12 +782,71 @@ public class PlayComputer extends AppCompatActivity
 
     public void a8Clicked(View view) {
         System.out.println("tile 1 has been clicked");
+        selectChessPiece(0,0);
+    }
+
+    public void a2Clicked(View view)
+    {
+        selectChessPiece(6, 0);
+        System.out.println("White kingside pawn clicked");
+    }
+
+    public void b2Clicked(View view)
+    {
+        selectChessPiece(6, 1);
+    }
+
+    public void c2Clicked(View view)
+    {
+        selectChessPiece(6, 2);
+    }
+
+    public void d2Clicked(View view)
+    {
+        selectChessPiece(6, 3);
     }
 
     public void e2Clicked(View view)
     {
-        System.out.println("White kingside pawn clicked");
+        selectChessPiece(6, 4);
     }
 
+    public void f2Clicked(View view)
+    {
+        selectChessPiece(6, 5);
+    }
+
+    public void g2Clicked(View view)
+    {
+        selectChessPiece(6, 6);
+    }
+
+    public void h2Clicked(View view)
+    {
+        selectChessPiece(6, 7);
+    }
+
+    public void e4Clicked(View view)
+    {
+        selectChessPiece(4,4);
+        selectDestinationLocation(4,4);
+    }
+
+    public void clearSelection(View view)
+    {
+        selectedPieceRow = -1;
+        selectedPieceCol = -1;
+
+        TextView selectedPieceStarting = findViewById(R.id.startingLocation);
+        selectedPieceStarting.setText("");
+
+        TextView selectedPieceEnding = findViewById(R.id.endingLocation);
+        selectedPieceEnding.setText("");
+    }
+
+    public void returnToMainMenu(View v)
+    {
+        finish();
+    }
 
 }
