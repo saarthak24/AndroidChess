@@ -541,5 +541,39 @@
 
     </androidx.gridlayout.widget.GridLayout>
 
+    <TextView
+        android:id="@+id/startingLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingTop="20dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="5dp"
+        android:text="Starting Piece" />
+
+    <TextView
+        android:id="@+id/endingLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingTop="5dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="20dp"
+        android:text="Ending Location" />
+
+    <Button
+        android:id="@+id/returnToMainMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Return to main screen"
+        android:onClick="returnToMainMenu"/>
+
+    <Button
+        android:id="@+id/cancelSelection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancel piece selection"
+        android:onClick="clearSelection"/>
+
 
 </LinearLayout>
