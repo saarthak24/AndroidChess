@@ -51,6 +51,7 @@ public class PlayComputer extends AppCompatActivity
     int destinationTileRow=-1;
     int destinationTileCol=-1;
 
+    private boolean chessPieceSelected=false;
     public boolean chessPieceSelected()
     {
         boolean result=false;
@@ -90,21 +91,37 @@ public class PlayComputer extends AppCompatActivity
         {
             selectedPieceRow=row;
             selectedPieceCol=col;
+            chessPieceSelected=true;
             editPieceStartingLocationInApp(selectedPieceRow, selectedPieceCol);
         }
     }
 
     public void selectDestinationLocation(int row, int col)
     {
-        if(chessPieceSelected()==true && row!=selectedPieceRow && col!=selectedPieceCol)
+        System.out.println("Chess status: " + chessPieceSelected());
+        System.out.println("selected row: " + selectedPieceRow + ", col: " + selectedPieceCol);
+        if(chessPieceSelected==true)
         {
             System.out.println("here2dest");
             destinationTileRow=row;
             destinationTileCol=col;
             editPieceEndingLocationInApp(row, col);
+            movePiece(WHITE_PAWN, selectedPieceRow, selectedPieceCol, row, col);
             selectedPieceRow=-1;
             selectedPieceCol=-1;
+            chessPieceSelected=false;
         }
+    }
+
+    public void movePiece(int chessPiece, int startRow, int startCol, int endRow, int endCol)
+    {
+        //addBlankTile(startRow, startCol);
+        if(chessPiece==WHITE_PAWN)
+        {
+            addBlankTile(startRow, startCol);
+            addWhitePawn(endRow, endCol);
+        }
+
     }
 
     public void editPieceStartingLocationInApp(int row, int col)
