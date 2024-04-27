@@ -216,7 +216,7 @@
             android:id="@+id/imageView24"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="f6Clicked"
+            android:onClick="h6Clicked"
             app:srcCompat="@drawable/chess_l45"
             tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
