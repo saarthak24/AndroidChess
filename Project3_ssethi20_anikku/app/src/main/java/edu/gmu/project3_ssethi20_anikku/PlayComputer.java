@@ -120,8 +120,8 @@ public class PlayComputer extends AppCompatActivity
         if(chessPiece==WHITE_PAWN)
         {
             System.out.println("in white pawn if condition");
-            //if the starting row is 1 or 6, we can move two steps (moving forward, not capturing any piece)
-            if((startRow==1 || startRow==6) && (startCol==endCol) && chessGrid[startRow][startCol]==WHITE_PAWN && chessGrid[endRow][endCol]==BLANK_SQUARE)
+            //if the starting row is 6 (or 1 for black), we can move two steps (moving forward, not capturing any piece)
+            if((startRow==6 && ((startRow-endRow)==2) && (startCol==endCol)) && chessGrid[startRow][startCol]==WHITE_PAWN && chessGrid[endRow][endCol]==BLANK_SQUARE)
             {
                 System.out.println("beginning row pawn");
                 addBlankTile(startRow, startCol);
@@ -129,11 +129,24 @@ public class PlayComputer extends AppCompatActivity
             }
 
             //otherwise, we move 1 step forward (not capturing piece, moving forward only)
-            else if(startRow!=1 && endRow!=6 && chessGrid[startRow][startCol]==WHITE_PAWN && chessGrid[endRow][endCol]==BLANK_SQUARE)
+            else if(((startRow-endRow)==1 && (startCol==endCol)) && chessGrid[startRow][startCol]==WHITE_PAWN && chessGrid[endRow][endCol]==BLANK_SQUARE)
             {
                 System.out.println("pawn past row 1 or 6");
                 addBlankTile(startRow, startCol);
                 addWhitePawn(endRow, endCol);
+            }
+
+            //capturing pieces (the difference between the row is a positive number for white pieces capturing movement from start to end row
+            else if(Math.abs(startCol-endCol)==1 && ((startRow-endRow)==1) && chessGrid[startRow][startCol]==WHITE_PAWN && chessGrid[endRow][endCol]!=BLANK_SQUARE && chessGrid[endRow][endCol]!=BLACK_KING)
+            {
+                addBlankTile(startRow, startCol);
+                addWhitePawn(endRow, endCol);
+            }
+
+            //otherwise, it is an illegal move
+            else
+            {
+                Toast.makeText(getApplicationContext(), "The move you done is an illegal move", Toast.LENGTH_SHORT).show();
             }
 
         }
