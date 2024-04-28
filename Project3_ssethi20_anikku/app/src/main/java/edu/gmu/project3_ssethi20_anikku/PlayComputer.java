@@ -119,8 +119,23 @@ public class PlayComputer extends AppCompatActivity
         //addBlankTile(startRow, startCol);
         if(chessPiece==WHITE_PAWN)
         {
-            addBlankTile(startRow, startCol);
-            addWhitePawn(endRow, endCol);
+            System.out.println("in white pawn if condition");
+            //if the starting row is 1 or 6, we can move two steps (moving forward, not capturing any piece)
+            if((startRow==1 || startRow==6) && (startCol==endCol) && chessGrid[startRow][startCol]==WHITE_PAWN && chessGrid[endRow][endCol]==BLANK_SQUARE)
+            {
+                System.out.println("beginning row pawn");
+                addBlankTile(startRow, startCol);
+                addWhitePawn(endRow, endCol);
+            }
+
+            //otherwise, we move 1 step forward (not capturing piece, moving forward only)
+            else if(startRow!=1 && endRow!=6 && chessGrid[startRow][startCol]==WHITE_PAWN && chessGrid[endRow][endCol]==BLANK_SQUARE)
+            {
+                System.out.println("pawn past row 1 or 6");
+                addBlankTile(startRow, startCol);
+                addWhitePawn(endRow, endCol);
+            }
+
         }
 
     }
