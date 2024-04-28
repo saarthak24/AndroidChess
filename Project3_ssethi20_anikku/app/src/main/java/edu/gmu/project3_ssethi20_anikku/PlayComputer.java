@@ -97,6 +97,7 @@ public class PlayComputer extends AppCompatActivity
         }
     }
 
+
     public void selectDestinationLocation(int row, int col)
     {
         System.out.println("Chess status: " + chessPieceSelected());
@@ -107,11 +108,60 @@ public class PlayComputer extends AppCompatActivity
             destinationTileRow=row;
             destinationTileCol=col;
             editPieceEndingLocationInApp(row, col);
-            movePiece(WHITE_PAWN, selectedPieceRow, selectedPieceCol, row, col);
+            movePiece(chessGrid[selectedPieceRow][selectedPieceCol], selectedPieceRow, selectedPieceCol, row, col);
             selectedPieceRow=-1;
             selectedPieceCol=-1;
             chessPieceSelected=false;
         }
+    }
+
+    //method checks if the path is blocked and refuses to move the rook if that is the case
+    private boolean isPathBlockedRook(int startRow, int startCol, int endRow, int endCol)
+    {
+        int loopIndex=0;
+        boolean result=false;
+        //when the user wants to move the rook horizontally
+        if(startRow==endRow && startCol!=endCol)
+        {
+            int incrementValue=-1;
+            if(endCol>startCol)
+            {
+                incrementValue=1;
+            }
+            loopIndex=startCol+incrementValue;
+            while(loopIndex!=endCol)
+            {
+                if(chessGrid[startRow][loopIndex]!=BLANK_SQUARE)
+                {
+                    result=true;
+                    break;
+                }
+                loopIndex=loopIndex+incrementValue;
+            }
+
+        }
+
+        //when the user wants to move the rook vertically
+        else if(startRow!=endRow && startCol==endCol)
+        {
+            int incrementValue=-1;
+            if(endRow>startRow)
+            {
+                incrementValue = 1;
+            }
+
+            loopIndex=startRow+incrementValue;
+            while(loopIndex!=endRow)
+            {
+                if(chessGrid[loopIndex][startCol]!=BLANK_SQUARE)
+                {
+                    result=true;
+                    break;
+                }
+                loopIndex=loopIndex+incrementValue;
+            }
+        }
+        return result;
     }
 
     public void movePiece(int chessPiece, int startRow, int startCol, int endRow, int endCol)
@@ -147,6 +197,41 @@ public class PlayComputer extends AppCompatActivity
             else
             {
                 Toast.makeText(getApplicationContext(), "The move you done is an illegal move", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
+        else if(chessPiece==WHITE_ROOK)
+        {
+            //when the user moves the rook along a row (up-down)
+            if(startRow!=endRow && startCol==endCol && chessGrid[startRow][startCol]==WHITE_ROOK && chessGrid[endRow][endCol]==BLANK_SQUARE && isPathBlockedRook(startRow, startCol, endRow, endCol)==false)
+            {
+                addBlankTile(startRow, startCol);
+                addWhiteRook(endRow, endCol);
+            }
+
+            //when the user moves the rook along a column (left-right)
+            else if(startRow==endRow && startCol!=endCol && chessGrid[startRow][startCol]==WHITE_ROOK && chessGrid[endRow][endCol]==BLANK_SQUARE && isPathBlockedRook(startRow, startCol, endRow, endCol)==false)
+            {
+                addBlankTile(startRow, startCol);
+                addWhiteRook(endRow, endCol);
+            }
+
+            //when the user attempts to capture an opponent's piece
+            else if(((startRow!=endRow && startCol==endCol) || (startRow==endRow && startCol!=endCol)) && chessGrid[startRow][startCol]==WHITE_ROOK &&
+                    chessGrid[endRow][endCol]!=BLANK_SQUARE && chessGrid[endRow][endCol]!=BLACK_KING &&
+                    chessGrid[endRow][endCol]!=WHITE_ROOK  && chessGrid[endRow][endCol]!=WHITE_KNIGHT &&
+                    chessGrid[endRow][endCol]!=WHITE_BISHOP && chessGrid[endRow][endCol]!=WHITE_KING &&
+                    chessGrid[endRow][endCol]!=WHITE_QUEEN && chessGrid[endRow][endCol]!=WHITE_PAWN && isPathBlockedRook(startRow, startCol, endRow, endCol)==false)
+            {
+                addBlankTile(startRow, startCol);
+                addWhiteRook(endRow, endCol);
+            }
+
+            //when the user does an illegal move, we let the user know
+            else
+            {
+                Toast.makeText(getApplicationContext(), "The move you picked for the rook is an illegal move", Toast.LENGTH_SHORT).show();
             }
 
         }
