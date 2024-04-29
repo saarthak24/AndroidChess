@@ -538,8 +538,17 @@
             app:srcCompat="@drawable/chess_d45"
             tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
-
     </androidx.gridlayout.widget.GridLayout>
+
+    <TextView
+        android:id="@+id/statusText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingTop="20dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="5dp"
+        android:text="Good Luck, Have Fun!" />
 
     <TextView
         android:id="@+id/startingLocation"

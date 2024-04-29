@@ -13,18 +13,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-
-
-    public void playAgainstComputerClicked(View view)
-    {
-        //uses the PlayComputer.java file to load the page for player vs. pc
-        Intent intent=new Intent(MainActivity.this, PlayComputer.class);
-        if(intent!=null && intent.resolveActivity(getPackageManager()) != null)
-        {
+    public void playAgainstComputerClicked(View view) {
+        // Uses the PlayComputer.java file to load the page for player vs. pc
+        Intent intent = new Intent(MainActivity.this, PlayComputer.class);
+        if(intent != null && intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         }
     }
 
     public void playAgainstFriendClicked(View view) {
+        Intent intent = new Intent(MainActivity.this, PlayFriend.class);
+        if(intent != null && intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 }
