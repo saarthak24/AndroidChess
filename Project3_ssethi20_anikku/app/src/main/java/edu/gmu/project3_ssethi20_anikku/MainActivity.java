@@ -27,4 +27,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
+    public void viewGameHistory(View view) {
+        Intent intent  = new Intent(MainActivity.this, ViewGameHistory.class);
+        if(intent != null && intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
 }

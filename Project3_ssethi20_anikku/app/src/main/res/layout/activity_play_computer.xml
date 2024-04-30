@@ -13,7 +13,8 @@
         android:paddingTop="40dp"
         android:paddingRight="20dp"
         android:paddingBottom="20dp"
-        android:text="Player vs. Computer" />
+        android:text="Player vs. Computer"
+        android:textStyle="bold" />
 
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/chessboard"

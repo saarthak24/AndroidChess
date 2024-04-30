@@ -29,9 +29,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class PlayFriend extends AppCompatActivity {
     TextView turnText;
     TextView statusText;
+    TextView selectedPieceStarting;
+    TextView selectedPieceEnding;
     int chessGrid[][] = new int[BOARD_SIZE][BOARD_SIZE];
 
     private boolean whiteTurn = true;
@@ -51,6 +56,8 @@ public class PlayFriend extends AppCompatActivity {
 
         statusText = findViewById(R.id.statusText);
         turnText = findViewById(R.id.turnStatus);
+        selectedPieceStarting = findViewById(R.id.startingLocation);
+        selectedPieceEnding = findViewById(R.id.endingLocation);
 
         resetGame();
 
@@ -185,21 +192,17 @@ public class PlayFriend extends AppCompatActivity {
             return 0; // The game is not over!
         }
     }
-    public void saveGameResultToFirebase(String dateTime, String outcome) {
-        // Get the current user
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        // Check if the user is authenticated
-        if (currentUser != null) {
-            // Get the user ID
-            String userId = currentUser.getUid();
+    public void saveGameResultToFirebase(String outcome) {
+        System.out.println("attempting to save game result to firebase");
 
-            // Create a new GameHistory object
-            GameHistory gameHistory = new GameHistory(dateTime, outcome);
+        Date currentDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDateTime = dateFormat.format(currentDate);
+        GameHistory gameHistory = new GameHistory(formattedDateTime, outcome);
 
-            // Save the game history to Firebase
-            gameHistory.saveToFirebase(userId);
-        }
+        // Save this game's result to Firebase
+        gameHistory.saveToFirebase();
     }
 
     public void selectMoveDestination(int row, int col) {
@@ -220,11 +223,13 @@ public class PlayFriend extends AppCompatActivity {
                         updateTurn();
                         break;
                     case 1:
-                        updateStatusText("Game Over! White won!");
+                        updateStatusText("Game Over! White won!"); // TODO: Display as toast or alert instead of updating status text
+                        saveGameResultToFirebase("White won!");
                         resetGame();
                         break;
                     case -1:
-                        updateStatusText("Game Over! Black won!");
+                        updateStatusText("Game Over! Black won!"); // TODO: Display as toast or alert instead of updating status text
+                        saveGameResultToFirebase("Black won!");
                         resetGame();
                         break;
                 }
@@ -540,8 +545,8 @@ public class PlayFriend extends AppCompatActivity {
         }
     }
 
-    //This method is used to span pawns from the left to right (used when starting a new game)
-    private void spanPawns(int colorStatus, int startRow) {
+    //This method is used to spawn pawns from the left to right (used when starting a new game)
+    private void spawnPawns(int colorStatus, int startRow) {
         if(colorStatus==BLACK) {
             for (int col = 0; col < BOARD_SIZE; col++) {
                 addBlackPawn(startRow, col);
@@ -555,7 +560,7 @@ public class PlayFriend extends AppCompatActivity {
         }
     }
 
-    public void spanBlankTiles() {
+    public void spawnBlankTiles() {
         for(int i=0; i<chessGrid.length; i++) {
             for(int j=0; j<chessGrid[i].length; j++) {
                 addBlankTile(i, j);
@@ -565,7 +570,7 @@ public class PlayFriend extends AppCompatActivity {
 
     public void resetGame() {
         //adding blank tiles (removing existing pieces from old game, and initializing grid data structure)
-        spanBlankTiles();
+        spawnBlankTiles();
 
         //setting up the pieces for black
         addBlackRook(0, 0);
@@ -576,7 +581,7 @@ public class PlayFriend extends AppCompatActivity {
         addBlackBishop(0, 5);
         addBlackQueen(0, 3);
         addBlackKing(0, 4);
-        spanPawns(BLACK, 1);
+        spawnPawns(BLACK, 1);
 
         //setting up the pieces for white
         addWhiteRook(7, 0);
@@ -587,27 +592,25 @@ public class PlayFriend extends AppCompatActivity {
         addWhiteBishop(7,5);
         addWhiteQueen(7,3);
         addWhiteKing(7,4);
-        spanPawns(WHITE, 6);
+        spawnPawns(WHITE, 6);
 
-        selectedPieceRow=-1;
-        selectedPieceCol=-1;
-        destinationTileRow=-1;
-        destinationTileCol=-1;
-
+        whiteTurn = true;
         turnText.setText("It is White's turn to move");
+        clearSelection(getCurrentFocus());
     }
 
     public void clearSelection(View view) {
-        selectedPieceRow = -1;
-        selectedPieceCol = -1;
+        if(chessPieceSelected) {
+            chessPieceSelected = false;
+            selectedPieceRow = -1;
+            selectedPieceCol = -1;
+            destinationTileRow = -1;
+            destinationTileCol = -1;
 
-        updateStatusText("Please select a piece to move!");
-
-        TextView selectedPieceStarting = findViewById(R.id.startingLocation);
-        selectedPieceStarting.setText("Starting Piece");
-
-        TextView selectedPieceEnding = findViewById(R.id.endingLocation);
-        selectedPieceEnding.setText("Ending Location");
+            updateStatusText("Please select a piece to move!");
+            selectedPieceStarting.setText("Starting Piece");
+            selectedPieceEnding.setText("Ending Location");
+        }
     }
 
     public void returnToMainMenu(View v) {

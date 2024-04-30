@@ -12,32 +12,14 @@ public class GameHistory {
         this.outcome = outcome;
     }
 
-    // Getters and setters
-    public String getDateTime() {
-        return dateTime;
-    }
+    // Method to save a game's result to Firebase
+    public void saveToFirebase() {
+        // Get a reference to the Firebase database
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReferenceFromUrl("https://cs477-s24-project3-default-rtdb.firebaseio.com/");
 
-    public void setDateTime(String dateTime) {
-        this.dateTime = dateTime;
-    }
-
-    public String getOutcome() {
-        return outcome;
-    }
-
-    public void setOutcome(String outcome) {
-        this.outcome = outcome;
-    }
-
-    // Method to save game history to Firebase
-    public void saveToFirebase(String userId) {
-        // Get a reference to your Firebase database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("gameHistory").child(userId);
-
-        // Create a new game history entry
-        DatabaseReference newEntryRef = ref.push();
-        newEntryRef.child("dateTime").setValue(dateTime);
-        newEntryRef.child("outcome").setValue(outcome);
+        // Create a new game result entry in the database
+        DatabaseReference newEntry = ref.push();
+        newEntry.child("dateTime").setValue(dateTime);
+        newEntry.child("outcome").setValue(outcome);
     }
 }

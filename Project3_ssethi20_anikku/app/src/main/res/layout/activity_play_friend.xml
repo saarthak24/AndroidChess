@@ -13,7 +13,8 @@
         android:paddingTop="40dp"
         android:paddingRight="20dp"
         android:paddingBottom="20dp"
-        android:text="It is White's turn to move" />
+        android:text="It is White's turn to move"
+        android:textStyle="bold"/>
 
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/chessboard"
