@@ -18,6 +18,9 @@ import static edu.gmu.project3_ssethi20_anikku.Constants.WHITE_BISHOP;
 import static edu.gmu.project3_ssethi20_anikku.Constants.WHITE_ROOK;
 import static edu.gmu.project3_ssethi20_anikku.Constants.getPieceName;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -180,6 +183,22 @@ public class PlayFriend extends AppCompatActivity {
         }
         else {
             return 0; // The game is not over!
+        }
+    }
+    public void saveGameResultToFirebase(String dateTime, String outcome) {
+        // Get the current user
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        // Check if the user is authenticated
+        if (currentUser != null) {
+            // Get the user ID
+            String userId = currentUser.getUid();
+
+            // Create a new GameHistory object
+            GameHistory gameHistory = new GameHistory(dateTime, outcome);
+
+            // Save the game history to Firebase
+            gameHistory.saveToFirebase(userId);
         }
     }
 
