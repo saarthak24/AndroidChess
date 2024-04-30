@@ -21,4 +21,9 @@ public class Constants {
     public static final int WHITE_QUEEN = 10;
     public static final int WHITE_KING = 11;
     public static final int WHITE_PAWN = 12;
+
+    public static String getPieceName(int piece) {
+        String names[] = {"BLANK SQUARE", "Black Rook", "Black Knight", "Black Bishop", "Black Queen", "Black King", "Black Pawn", "White Rook", "White Knight", "White Bishop", "White Queen", "White King", "White Pawn"};
+        return names[piece];
+    }
 }

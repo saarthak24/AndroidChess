@@ -1,9 +1,594 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PlayFriend">
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/topInstructions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingTop="40dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="20dp"
+        android:text="Player 1 vs. Player 2" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.gridlayout.widget.GridLayout
+        android:id="@+id/chessboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="20dp"
+        android:paddingRight="20dp"
+        app:columnCount="8"
+        app:rowCount="8"
+        app:alignmentMode="alignMargins">
+
+        <ImageView
+            android:id="@+id/a8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="a8Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+        <ImageView
+            android:id="@+id/b8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="b8Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/c8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="c8Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/d8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="d8Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/e8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="e8Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/f8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="f8Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/g8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="g8Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/h8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="h8Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/a7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="a7Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/b7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="b7Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+        <ImageView
+            android:id="@+id/c7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="c7Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/d7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="d7Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/e7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="e7Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/f7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="f7Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/g7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="g7Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+        <ImageView
+            android:id="@+id/h7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="h7Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/a6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="a6Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/b6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="b6Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/c6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="c6Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/d6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="d6Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/e6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="e6Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/f6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="f6Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/g6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="g6Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/h6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="h6Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/a5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="a5Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/b5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="b5Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/c5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="c5Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/d5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="d5Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/e5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="e5Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        <ImageView
+            android:id="@+id/f5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="f5Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        <ImageView
+            android:id="@+id/g5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="g5Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/h5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="h5Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/a4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="a4Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/b4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="b4Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/c4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="c4Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/d4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="d4Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/e4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="e4Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/f4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="f4Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/g4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="g4Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/h4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="h4Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/a3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="a3Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/b3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="b3Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/c3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="c3Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/d3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="d3Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/e3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="e3Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/f3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="f3Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/g3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="g3Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/h3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="h3Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/a2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="a2Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/b2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="b2Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/c2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="c2Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/d2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="d2Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/e2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="e2Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/f2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="f2Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/g2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="g2Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/h2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="h2Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/a1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="a1Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/b1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="b1Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/c1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="c1Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/d1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="d1Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/e1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="e1Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/f1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="f1Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/g1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="g1Clicked"
+            app:srcCompat="@drawable/chess_l45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:id="@+id/h1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="h1Clicked"
+            app:srcCompat="@drawable/chess_d45"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    </androidx.gridlayout.widget.GridLayout>
+
+    <TextView
+        android:id="@+id/statusText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingTop="20dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="5dp"
+        android:text="Good Luck, Have Fun!" />
+
+    <TextView
+        android:id="@+id/startingLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingTop="20dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="5dp"
+        android:text="Starting Piece" />
+
+    <TextView
+        android:id="@+id/endingLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingTop="5dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="20dp"
+        android:text="Ending Location" />
+
+    <Button
+        android:id="@+id/returnToMainMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="5dp"
+        android:text="Return to main screen"
+        android:onClick="returnToMainMenu"/>
+
+    <Button
+        android:id="@+id/cancelSelection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:text="Cancel piece selection"
+        android:onClick="clearSelection"/>
+
+
+</LinearLayout>

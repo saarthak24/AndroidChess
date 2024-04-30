@@ -16,6 +16,7 @@ import static edu.gmu.project3_ssethi20_anikku.Constants.WHITE_KNIGHT;
 import static edu.gmu.project3_ssethi20_anikku.Constants.WHITE_KING;
 import static edu.gmu.project3_ssethi20_anikku.Constants.WHITE_BISHOP;
 import static edu.gmu.project3_ssethi20_anikku.Constants.WHITE_ROOK;
+import static edu.gmu.project3_ssethi20_anikku.Constants.getPieceName;
 
 import android.os.Bundle;
 import android.view.View;
@@ -27,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class PlayComputer extends AppCompatActivity
 {
+    TextView statusText;
     int chessGrid[][] = new int[BOARD_SIZE][BOARD_SIZE];
 
     private boolean computerTurn=false;
@@ -72,21 +74,17 @@ public class PlayComputer extends AppCompatActivity
         return String.valueOf(columnNotation[col]) + rowNotation[row];
     }
 
-    public String getPieceName(int piece) {
-        String names[] = {"BLANK SQUARE", "Black Rook", "Black Knight", "Black Bishop", "Black Queen", "Black King", "Black Pawn", "White Rook", "White Knight", "White Bishop", "White Queen", "White King", "White Pawn"};
-        return names[piece];
-    }
-
-    public void selectChessPiece(int row, int col) {
-        System.out.println("The chess piece selected: " + chessPieceSelected());
-        TextView statusText = findViewById(R.id.statusText);
+    public void selectPieceToMove(int row, int col) {
+        if(getPieceName(chessGrid[row][col]).startsWith("Black")) {
+            updateStatusText("You cannot move the opponent's piece!");
+            return;
+        }
+        if(!chessPieceSelected()) {
+            System.out.println("There is currently no chess piece selected.");
+        }
 
         if(chessPieceSelected() == false && computerTurn == false && chessGrid[row][col] == BLANK_SQUARE) {
             Toast.makeText(getApplicationContext(), "Please select a chess piece", Toast.LENGTH_SHORT).show();
-        }
-
-        else if(chessPieceSelected() == false && computerTurn == false && chessGrid[row][col] == BLACK_ROOK || chessGrid[row][col]==BLACK_KNIGHT || chessGrid[row][col]==BLACK_BISHOP || chessGrid[row][col]==BLACK_QUEEN ||chessGrid[row][col]==BLACK_KING || chessGrid[row][col]==BLACK_PAWN) {
-           Toast.makeText(getApplicationContext(), "You need to select your chess piece", Toast.LENGTH_SHORT).show();
         }
 
         else if(computerTurn == false && chessPieceSelected() == false) {
@@ -94,13 +92,23 @@ public class PlayComputer extends AppCompatActivity
             selectedPieceCol = col;
             chessPieceSelected = true;
             editStartingLocationText(selectedPieceRow, selectedPieceCol);
-            statusText.setText("You selected the " + getPieceName(chessGrid[row][col]) + " on " + getSquareNotation(row, col));
+            System.out.println("Now there is. You selected the " + getPieceName(chessGrid[row][col]) + " on " + getSquareNotation(row, col));
+            updateStatusText("You selected the " + getPieceName(chessGrid[row][col]) + " on " + getSquareNotation(row, col));
         }
     }
 
+    public void updateStatusText(String newStatus) {
+        statusText.setText(newStatus);
+    }
+
     public void selectMoveDestination(int row, int col) {
-        System.out.println("Chess status: " + chessPieceSelected());
-        System.out.println("Selected row: " + selectedPieceRow + ", col: " + selectedPieceCol);
+        if(!chessPieceSelected()) {
+            System.out.println("There is currently no chess piece selected.");
+        }
+        else {
+            System.out.println("You currently have a chess piece selected.");
+        }
+        System.out.println("Selected row: " + (selectedPieceRow+1) + ", col: " + (selectedPieceCol+1));
         if(chessPieceSelected == true && (row != selectedPieceRow || col != selectedPieceCol)) {
             System.out.println("here2dest");
             destinationTileRow = row;
@@ -109,8 +117,10 @@ public class PlayComputer extends AppCompatActivity
 
             int selectedPiece = chessGrid[selectedPieceRow][selectedPieceCol];
             if(movePiece(selectedPiece, selectedPieceRow, selectedPieceCol, row, col)) {
-                TextView statusText = findViewById(R.id.statusText);
-                statusText.setText("You moved the " + getPieceName(selectedPiece) + " on " +  getSquareNotation(selectedPieceRow, selectedPieceCol) + " to " + getSquareNotation(row, col));
+                updateStatusText("You moved the " + getPieceName(selectedPiece) + " on " +  getSquareNotation(selectedPieceRow, selectedPieceCol) + " to " + getSquareNotation(row, col));
+            }
+            else {
+                updateStatusText("That is an illegal move!");
             }
 
             selectedPieceRow=-1;
@@ -119,86 +129,32 @@ public class PlayComputer extends AppCompatActivity
         }
     }
 
-    //method checks if the path is blocked and refuses to move the rook if that is the case
-    private boolean isPathBlockedRook(int startRow, int startCol, int endRow, int endCol) {
-        int loopIndex=0;
-        boolean result=false;
-        //when the user wants to move the rook horizontally
-        if(startRow==endRow && startCol!=endCol) {
-            int incrementValue=-1;
-            if(endCol>startCol) {
-                incrementValue=1;
-            }
-            loopIndex=startCol+incrementValue;
-            while(loopIndex!=endCol)
-            {
-                if(chessGrid[startRow][loopIndex] != BLANK_SQUARE) {
-                    result=true;
-                    break;
-                }
-                loopIndex=loopIndex+incrementValue;
-            }
-
-        }
-
-        //when the user wants to move the rook vertically
-        else if(startRow!=endRow && startCol==endCol)
-        {
-            int incrementValue=-1;
-            if(endRow>startRow) {
-                incrementValue = 1;
-            }
-
-            loopIndex=startRow+incrementValue;
-            while(loopIndex!=endRow) {
-                if(chessGrid[loopIndex][startCol] != BLANK_SQUARE) {
-                    result=true;
-                    break;
-                }
-                loopIndex=loopIndex+incrementValue;
-            }
-        }
-        return result;
-    }
-
     public boolean movePiece(int chessPiece, int startRow, int startCol, int endRow, int endCol) {
         if(chessPiece==WHITE_PAWN) {
-            System.out.println("in white pawn if condition");
-            Pawn.movePiece(this, chessGrid, startRow, startCol, endRow, endCol, true);
+            System.out.println("in white pawn move condition");
+            return Pawn.movePiece(this, chessGrid, startRow, startCol, endRow, endCol, true);
         }
-
+        else if(chessPiece==WHITE_BISHOP) {
+            System.out.println("in white bishop move condition");
+            return Bishop.movePiece(this, chessGrid, startRow, startCol, endRow, endCol, true);
+        }
+        else if(chessPiece==WHITE_KNIGHT) {
+            System.out.println("in white knight move condition");
+            return Knight.movePiece(this, chessGrid, startRow, startCol, endRow, endCol, true);
+        }
         else if(chessPiece==WHITE_ROOK) {
-            //when the user moves the rook along a row (up-down)
-            if(startRow!=endRow && startCol==endCol && chessGrid[startRow][startCol]==WHITE_ROOK && chessGrid[endRow][endCol]==BLANK_SQUARE && isPathBlockedRook(startRow, startCol, endRow, endCol)==false) {
-                addBlankTile(startRow, startCol);
-                addWhiteRook(endRow, endCol);
-            }
-
-            //when the user moves the rook along a column (left-right)
-            else if(startRow==endRow && startCol!=endCol && chessGrid[startRow][startCol]==WHITE_ROOK && chessGrid[endRow][endCol]==BLANK_SQUARE && isPathBlockedRook(startRow, startCol, endRow, endCol)==false)
-            {
-                addBlankTile(startRow, startCol);
-                addWhiteRook(endRow, endCol);
-            }
-
-            //when the user attempts to capture an opponent's piece
-            else if(((startRow!=endRow && startCol==endCol) || (startRow==endRow && startCol!=endCol)) && chessGrid[startRow][startCol]==WHITE_ROOK &&
-                    chessGrid[endRow][endCol]!=BLANK_SQUARE && chessGrid[endRow][endCol]!=BLACK_KING &&
-                    chessGrid[endRow][endCol]!=WHITE_ROOK  && chessGrid[endRow][endCol]!=WHITE_KNIGHT &&
-                    chessGrid[endRow][endCol]!=WHITE_BISHOP && chessGrid[endRow][endCol]!=WHITE_KING &&
-                    chessGrid[endRow][endCol]!=WHITE_QUEEN && chessGrid[endRow][endCol]!=WHITE_PAWN && isPathBlockedRook(startRow, startCol, endRow, endCol)==false)
-            {
-                addBlankTile(startRow, startCol);
-                addWhiteRook(endRow, endCol);
-            }
-
-            //when the user does an illegal move, we let the user know
-            else {
-                Toast.makeText(getApplicationContext(), "The move you picked for the rook is an illegal move", Toast.LENGTH_SHORT).show();
-                return false;
-            }
+            System.out.println("in white rook move condition");
+            return Rook.movePiece(this, chessGrid, startRow, startCol, endRow, endCol, true);
         }
-        return true;
+        else if(chessPiece==WHITE_QUEEN) {
+            System.out.println("in white queen move condition");
+            return Queen.movePiece(this, chessGrid, startRow, startCol, endRow, endCol, true);
+        }
+        else if(chessPiece==WHITE_KING) {
+            System.out.println("in white king move condition");
+            return King.movePiece(this, chessGrid, startRow, startCol, endRow, endCol, true);
+        }
+        return false;
     }
 
     public void editStartingLocationText(int row, int col) {
@@ -214,6 +170,9 @@ public class PlayComputer extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_computer);
+
+        statusText = findViewById(R.id.statusText);
+
         //ImageView kingSideTest=findViewById(R.id.imageView53);
         //kingSideTest.setImageResource(R.drawable.white_pawn_darkbg);
         resetGame();
@@ -234,7 +193,7 @@ public class PlayComputer extends AppCompatActivity
                     @Override
                     public void onClick(View v) {
                         // Perform the action based on the clicked square's position
-                        selectChessPiece(currentPosition[0], currentPosition[1]);
+                        selectPieceToMove(currentPosition[0], currentPosition[1]);
                         selectMoveDestination(currentPosition[0], currentPosition[1]);
                     }
                 });
@@ -569,11 +528,13 @@ public class PlayComputer extends AppCompatActivity
         selectedPieceRow = -1;
         selectedPieceCol = -1;
 
+        updateStatusText("Please select a piece to move!");
+
         TextView selectedPieceStarting = findViewById(R.id.startingLocation);
-        selectedPieceStarting.setText("");
+        selectedPieceStarting.setText("Starting Piece");
 
         TextView selectedPieceEnding = findViewById(R.id.endingLocation);
-        selectedPieceEnding.setText("");
+        selectedPieceEnding.setText("Ending Location");
     }
 
     public void returnToMainMenu(View v) {
