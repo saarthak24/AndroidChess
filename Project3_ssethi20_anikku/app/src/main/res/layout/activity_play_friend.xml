@@ -6,14 +6,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <TextView
-        android:id="@+id/topInstructions"
+        android:id="@+id/turnStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="20dp"
         android:paddingTop="40dp"
         android:paddingRight="20dp"
         android:paddingBottom="20dp"
-        android:text="Player 1 vs. Player 2" />
+        android:text="It is White's turn to move" />
 
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/chessboard"

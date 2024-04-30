@@ -29,6 +29,34 @@ public class Rook {
         return true;
     }
 
+    public static boolean movePiece(PlayFriend gameInstance, int[][] chessGrid, int startRow, int startCol,
+            int endRow, int endCol, boolean isWhite) {
+        // Ensure movement is diagonal
+        if (startRow != endRow && startCol != endCol) {
+            return false; // Not moving in one direction
+        }
+        // Make sure the path is clear
+        if (isPathClear(chessGrid, startRow, startCol, endRow, endCol)) {
+            System.out.println("Attempting to capture: " + getPieceName((chessGrid[endRow][endCol])));
+            if (getPieceName(chessGrid[endRow][endCol]).startsWith(isWhite ? "White" : "Black")) {
+                System.out.println(
+                        "Illegal Move: You are attempting to capture one of your own pieces with your rook.");
+                return false;
+            }
+            System.out.println("moving your rook");
+            gameInstance.addBlankTile(startRow, startCol);
+            if(isWhite) {
+                gameInstance.addWhiteRook(endRow, endCol);
+            }
+            else {
+                gameInstance.addBlackRook(endRow, endCol);
+            }
+        } else {
+            return false;
+        }
+        return true;
+    }
+
     private static boolean isPathClear(int[][] chessGrid, int startRow, int startCol, int endRow, int endCol) {
         // Calculate the direction of movement, either horizontally or vertically
         int rowDirection = endRow > startRow ? 1 : (endRow < startRow ? -1 : 0);

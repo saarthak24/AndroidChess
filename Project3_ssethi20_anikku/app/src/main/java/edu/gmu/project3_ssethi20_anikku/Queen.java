@@ -16,8 +16,7 @@ public class Queen {
             if(isPathClear(chessGrid, startRow, startCol, endRow, endCol)) {
                 System.out.println("Attempting to capture: " + getPieceName((chessGrid[endRow][endCol])));
                 if(getPieceName(chessGrid[endRow][endCol]).startsWith("White")) {
-                    System.out.println(
-                            "Illegal Move: You are attempting to capture one of your own pieces with your queen.");
+                    System.out.println("Illegal Move: You are attempting to capture one of your own pieces with your queen.");
                     return false;
                 }
                 System.out.println("moving your queen");
@@ -27,6 +26,36 @@ public class Queen {
             else {
                 return false;
             }
+        }
+        return true;
+    }
+
+    public static boolean movePiece(PlayFriend gameInstance, int[][] chessGrid, int startRow, int startCol,
+            int endRow, int endCol, boolean isWhite) {
+        // Ensure movement is diagonal
+        if (!((startCol == endCol && startRow != endRow) || (startCol != endCol && startRow == endRow)
+                || (Math.abs(endCol - startCol) == Math.abs(endRow - startRow)))) {
+            return false; // Not moving the queen in a legal direction (horizontally, vertically, or
+                          // diagonally)
+        }
+        // Make sure the path is clear
+        if (isPathClear(chessGrid, startRow, startCol, endRow, endCol)) {
+            System.out.println("Attempting to capture: " + getPieceName((chessGrid[endRow][endCol])));
+            if (getPieceName(chessGrid[endRow][endCol]).startsWith(isWhite ? "White" : "Black")) {
+                System.out.println(
+                        "Illegal Move: You are attempting to capture one of your own pieces with your queen.");
+                return false;
+            }
+            System.out.println("moving your queen");
+            gameInstance.addBlankTile(startRow, startCol);
+            if(isWhite) {
+                gameInstance.addWhiteQueen(endRow, endCol);
+            }
+            else {
+                gameInstance.addBlackQueen(endRow, endCol);
+            }
+        } else {
+            return false;
         }
         return true;
     }

@@ -29,6 +29,36 @@ public class Bishop {
         return true;
     }
 
+    public static boolean movePiece(PlayFriend gameInstance, int[][] chessGrid, int startRow, int startCol,
+            int endRow, int endCol, boolean isWhite) {
+        // Ensure movement is diagonal
+        if (Math.abs(endRow - startRow) != Math.abs(endCol - startCol)) {
+            return false; // Not diagonal movement
+        }
+        // Make sure the path is clear
+        if (isPathClear(chessGrid, startRow, startCol, endRow, endCol)) {
+            System.out.println("Attempting to capture: " + getPieceName((chessGrid[endRow][endCol])));
+            if (getPieceName(chessGrid[endRow][endCol]).startsWith(isWhite ? "White" : "Black")) {
+                System.out.println(
+                        "Illegal Move: You are attempting to capture one of your own pieces with your bishop.");
+                return false;
+            }
+            System.out.println("moving your bishop");
+            gameInstance.addBlankTile(startRow, startCol);
+            if(isWhite) {
+                gameInstance.addWhiteBishop(endRow, endCol);
+            }
+            else {
+                gameInstance.addBlackBishop(endRow, endCol);
+            }
+        }
+        // Return false if the path is not clear
+        else {
+            return false;
+        }
+        return true;
+    }
+
     private static boolean isPathClear(int[][] chessGrid, int startRow, int startCol, int endRow, int endCol) {
         // Calculate the direction of movement, both horizontally and vertically
         int rowDirection = endRow > startRow ? 1 : -1;

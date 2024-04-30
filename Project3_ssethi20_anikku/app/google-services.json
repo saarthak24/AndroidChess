@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "633971687474",
+    "firebase_url": "https://cs477-s24-project3-default-rtdb.firebaseio.com",
+    "project_id": "cs477-s24-project3",
+    "storage_bucket": "cs477-s24-project3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:633971687474:android:9155f9f4f8893d91babc2b",
+        "android_client_info": {
+          "package_name": "edu.gmu.project3_ssethi20_anikku"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDM58M4lugKsYSmQQXRbRUL7ypIaN2dP90"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
