@@ -15,6 +15,7 @@ public class Pawn {
                 System.out.println("beginning row pawn");
                 gameInstance.addBlankTile(startRow, startCol);
                 gameInstance.addWhitePawn(endRow, endCol);
+                PlayComputer.sounds.play(1, 1, 1, 1, 0, 1.0f);//Plays sound when user moves chesspiece
             }
 
             // otherwise, we move 1 step forward (not capturing piece, moving forward only)
@@ -30,6 +31,7 @@ public class Pawn {
                     System.out.println("moving pawn that has already moved at least once");
                     gameInstance.addBlankTile(startRow, startCol);
                     gameInstance.addWhitePawn(endRow, endCol);
+                    PlayComputer.sounds.play(1, 1, 1, 1, 0, 1.0f);//Plays sound when user moves chesspiece
                 }
             }
 
@@ -44,10 +46,13 @@ public class Pawn {
                     System.out.println("promoting pawn to a queen");
                     gameInstance.addBlankTile(startRow, startCol);
                     gameInstance.addWhiteQueen(endRow, endCol);
+                    PlayComputer.sounds.play(4, 1, 1, 1, 0, 1.0f);//Plays sound when user captures chesspiece
+
                 }
                 else {
                     gameInstance.addBlankTile(startRow, startCol);
                     gameInstance.addWhitePawn(endRow, endCol);
+                    PlayComputer.sounds.play(2, 1, 1, 1, 0, 1.0f);//Plays sound when user captures chesspiece
                 }
             }
 
