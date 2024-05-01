@@ -194,15 +194,14 @@ public class PlayFriend extends AppCompatActivity {
     }
 
     public void saveGameResultToFirebase(String outcome) {
-        System.out.println("attempting to save game result to firebase");
+        System.out.println("attempting to save game result to firebase from PlayFriend.java");
 
         Date currentDate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String formattedDateTime = dateFormat.format(currentDate);
-        GameHistory gameHistory = new GameHistory(formattedDateTime, outcome);
 
         // Save this game's result to Firebase
-        gameHistory.saveToFirebase();
+        GameHistory.saveToFirebase(new Game(formattedDateTime, outcome));
     }
 
     public void selectMoveDestination(int row, int col) {
