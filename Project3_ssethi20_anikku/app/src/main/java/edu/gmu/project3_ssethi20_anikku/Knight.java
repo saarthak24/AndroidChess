@@ -46,10 +46,12 @@ public class Knight {
             System.out.println("moving your knight");
             gameInstance.addBlankTile(startRow, startCol);
             gameInstance.addWhiteKnight(endRow, endCol);
+            MainActivity.sounds.play(1, 1, 1, 1, 0, 1.0f);//Plays sound when user moves chesspiece
             return true;
         } else {
             gameInstance.addBlankTile(startRow, startCol);
             gameInstance.addBlackKnight(endRow, endCol);
+            MainActivity.sounds.play(1, 1, 1, 1, 0, 1.0f);//Plays sound when user moves chesspiece
             return true;
         }
     }
