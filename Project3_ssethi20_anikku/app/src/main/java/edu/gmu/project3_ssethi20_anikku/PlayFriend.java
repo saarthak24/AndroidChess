@@ -18,9 +18,13 @@ import static edu.gmu.project3_ssethi20_anikku.Constants.WHITE_BISHOP;
 import static edu.gmu.project3_ssethi20_anikku.Constants.WHITE_ROOK;
 import static edu.gmu.project3_ssethi20_anikku.Constants.getPieceName;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -32,7 +36,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class PlayFriend extends AppCompatActivity {
+public class PlayFriend extends AppCompatActivity implements SensorEventListener {
     TextView turnText;
     TextView statusText;
     TextView selectedPieceStarting;
@@ -48,6 +52,16 @@ public class PlayFriend extends AppCompatActivity {
     int destinationTileCol = -1;
 
     private boolean chessPieceSelected = false;
+
+    //accelerometer stuff
+    private SensorManager mSensorManager;
+    private Sensor mAccelerometer;
+    private long mLastUpdate;
+
+    private float lastAccelerationValue=0;
+    float currentAccelerationValue =0;
+
+    float normalAccelerationTolerance=10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +100,58 @@ public class PlayFriend extends AppCompatActivity {
                 square.setTag(idName);
             }
         }
+
+        mLastUpdate = System.currentTimeMillis();
+        mSensorManager = (SensorManager)
+                getSystemService(SENSOR_SERVICE);
+        mAccelerometer = mSensorManager.getDefaultSensor(
+                Sensor.TYPE_ACCELEROMETER);
+
+        currentAccelerationValue=SensorManager.GRAVITY_EARTH;
+        lastAccelerationValue=SensorManager.GRAVITY_EARTH;
+        normalAccelerationTolerance=10;
+    }
+
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            long actualTime = System.currentTimeMillis();
+            if (actualTime  - mLastUpdate > 500)  {
+                mLastUpdate = actualTime;
+                float x = event.values[0],  y = event.values[1],
+                        z = event.values[2];
+
+                lastAccelerationValue=currentAccelerationValue;
+
+                currentAccelerationValue = (float) Math.sqrt((x*x)+(y*y)+(z*z));
+                float changeInAcceleration= currentAccelerationValue - lastAccelerationValue;
+
+                //applying formula to determine shaken device
+                normalAccelerationTolerance= (float) (normalAccelerationTolerance*0.9+changeInAcceleration);
+
+                if(normalAccelerationTolerance>12)
+                {
+                    MainActivity.sounds.play(5, 1, 1, 1, 0, 1.0f);//Plays sound when user shakes device
+                }
+
+            }
+        }
+    }
+
+    public void onAccuracyChanged(Sensor sensor, int accuracy)
+    {
+
+    }
+
+
+
+    protected void onResume()  {
+        super.onResume();
+        mSensorManager.registerListener(this, mAccelerometer,
+                SensorManager.SENSOR_DELAY_NORMAL);
+    }
+    protected void onPause() {
+        mSensorManager.unregisterListener(this);
+        super.onPause();
     }
 
     public int[] getSquareIndices(String notation) {
@@ -204,32 +270,6 @@ public class PlayFriend extends AppCompatActivity {
         GameHistory.saveToFirebase(new Game(formattedDateTime, outcome));
     }
 
-    private void displayResultAlert(String outcome) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Game Over");
-        builder.setMessage(outcome);
-
-        builder.setPositiveButton("Play Again", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                resetGame();
-            }
-        });
-
-        builder.setNegativeButton("Main Menu", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Navigate back to the "Main Menu"
-                Intent intent = new Intent(PlayFriend.this, MainActivity.class);
-                startActivity(intent);
-                finish(); // Close this activity
-            }
-        });
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
-
     public void selectMoveDestination(int row, int col) {
         System.out.println(chessPieceSelected ? "You currently have a chess piece selected." : "There is currently no chess piece selected.");
         System.out.println("Selected row: " + (selectedPieceRow+1) + ", col: " + (selectedPieceCol+1));
@@ -242,22 +282,19 @@ public class PlayFriend extends AppCompatActivity {
             int selectedPiece = chessGrid[selectedPieceRow][selectedPieceCol];
             if(movePiece(selectedPiece, selectedPieceRow, selectedPieceCol, row, col)) {
                 int gameStatus = gameOver();
-                String outcome = "";
                 switch(gameStatus) {
                     case 0:
                         updateStatusText((whiteTurn ? "White" : "Black") + " moved the " + getPieceName(selectedPiece) + " on " +  getSquareNotation(selectedPieceRow, selectedPieceCol) + " to " + getSquareNotation(row, col));
                         updateTurn();
                         break;
                     case 1:
-                        outcome = "White won!";
-                        saveGameResultToFirebase(outcome);
-                        displayResultAlert(outcome);
+                        updateStatusText("Game Over! White won!"); // TODO: Display as toast or alert instead of updating status text
+                        saveGameResultToFirebase("White won!");
                         resetGame();
                         break;
                     case -1:
-                        outcome = "Black won!";
-                        saveGameResultToFirebase(outcome);
-                        displayResultAlert(outcome);
+                        updateStatusText("Game Over! Black won!"); // TODO: Display as toast or alert instead of updating status text
+                        saveGameResultToFirebase("Black won!");
                         resetGame();
                         break;
                 }
