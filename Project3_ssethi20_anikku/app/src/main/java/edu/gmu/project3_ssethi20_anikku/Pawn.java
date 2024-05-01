@@ -17,7 +17,7 @@ public class Pawn {
                 System.out.println("Moving white pawn from the beginning row.");
                 gameInstance.addBlankTile(startRow, startCol);
                 gameInstance.addWhitePawn(endRow, endCol);
-                PlayComputer.sounds.play(1, 1, 1, 1, 0, 1.0f);//Plays sound when user moves chesspiece
+                MainActivity.sounds.play(1, 1, 1, 1, 0, 1.0f);//Plays sound when user moves chesspiece
             }
 
             // otherwise, we move 1 step forward (not capturing piece, moving forward only)
@@ -27,11 +27,13 @@ public class Pawn {
                     System.out.println("Promoting white pawn to queen.");
                     gameInstance.addBlankTile(startRow, startCol);
                     gameInstance.addWhiteQueen(endRow, endCol);
+                    MainActivity.sounds.play(4, 1, 1, 1, 0, 1.0f);//Plays sound when user moves chesspiece
+
                 } else {
                     System.out.println("Moving white pawn.");
                     gameInstance.addBlankTile(startRow, startCol);
                     gameInstance.addWhitePawn(endRow, endCol);
-                    PlayComputer.sounds.play(1, 1, 1, 1, 0, 1.0f); //Plays sound when user moves chesspiece
+                    MainActivity.sounds.play(1, 1, 1, 1, 0, 1.0f); //Plays sound when user moves chesspiece
                 }
             } else if (Math.abs(startCol - endCol) == 1 && (startRow - endRow) == 1
                     && chessGrid[startRow][startCol] == WHITE_PAWN && chessGrid[endRow][endCol] != BLANK_SQUARE) {
@@ -39,12 +41,13 @@ public class Pawn {
                     System.out.println("Promoting white pawn to queen after capturing.");
                     gameInstance.addBlankTile(startRow, startCol);
                     gameInstance.addWhiteQueen(endRow, endCol);
-                    PlayComputer.sounds.play(4, 1, 1, 1, 0, 1.0f); //Plays sound when user captures chesspiece
+                    MainActivity.sounds.play(2, 1, 1, 1, 0, 1.0f); //Plays sound when user captures chesspiece
+                    MainActivity.sounds.play(4, 1, 1, 1, 0, 1.0f); //Plays sound when user promotes pawn
                 }
                 else {
                     gameInstance.addBlankTile(startRow, startCol);
                     gameInstance.addWhitePawn(endRow, endCol);
-                    PlayComputer.sounds.play(2, 1, 1, 1, 0, 1.0f); //Plays sound when user captures chesspiece
+                    MainActivity.sounds.play(2, 1, 1, 1, 0, 1.0f); //Plays sound when user captures chesspiece
                 }
             } else {
                 System.out.println("Invalid move for white pawn.");
@@ -57,16 +60,20 @@ public class Pawn {
                 System.out.println("Moving black pawn from the beginning row.");
                 gameInstance.addBlankTile(startRow, startCol);
                 gameInstance.addBlackPawn(endRow, endCol);
+                MainActivity.sounds.play(1, 1, 1, 1, 0, 1.0f);//Plays sound when user moves chesspiece
+
             } else if ((endRow - startRow) == 1 && startCol == endCol && chessGrid[startRow][startCol] == BLACK_PAWN
                     && chessGrid[endRow][endCol] == BLANK_SQUARE) {
                 if (endRow == 7) {
                     System.out.println("Promoting black pawn to queen.");
                     gameInstance.addBlankTile(startRow, startCol);
                     gameInstance.addBlackQueen(endRow, endCol);
+                    MainActivity.sounds.play(4, 1, 1, 1, 0, 1.0f); //Plays sound when user promotes pawn
                 } else {
                     System.out.println("Moving black pawn.");
                     gameInstance.addBlankTile(startRow, startCol);
                     gameInstance.addBlackPawn(endRow, endCol);
+                    MainActivity.sounds.play(1, 1, 1, 1, 0, 1.0f);//Plays sound when user moves chesspiece
                 }
             } else if (Math.abs(endCol - startCol) == 1 && (endRow - startRow) == 1
                     && chessGrid[startRow][startCol] == BLACK_PAWN && chessGrid[endRow][endCol] != BLANK_SQUARE) {
@@ -74,10 +81,14 @@ public class Pawn {
                     System.out.println("Promoting black pawn to queen after capturing.");
                     gameInstance.addBlankTile(startRow, startCol);
                     gameInstance.addBlackQueen(endRow, endCol);
+                    MainActivity.sounds.play(2, 1, 1, 1, 0, 1.0f); //Plays sound when user captures chesspiece
+                    MainActivity.sounds.play(4, 1, 1, 1, 0, 1.0f); //Plays sound when user promotes pawn
+
                 } else {
                     System.out.println("Capturing piece with black pawn.");
                     gameInstance.addBlankTile(startRow, startCol);
                     gameInstance.addBlackPawn(endRow, endCol);
+                    MainActivity.sounds.play(2, 1, 1, 1, 0, 1.0f); //Plays sound when user captures chesspiece
                 }
             } else {
                 System.out.println("Invalid move for black pawn.");
@@ -98,16 +109,20 @@ public class Pawn {
                 System.out.println("Moving white pawn from the beginning row.");
                 gameInstance.addBlankTile(startRow, startCol);
                 gameInstance.addWhitePawn(endRow, endCol);
+                MainActivity.sounds.play(1, 1, 1, 1, 0, 1.0f);//Plays sound when user moves chesspiece
             } else if ((startRow - endRow) == 1 && startCol == endCol && chessGrid[startRow][startCol] == WHITE_PAWN
                     && chessGrid[endRow][endCol] == BLANK_SQUARE) {
                 if (endRow == 0) {
                     System.out.println("Promoting white pawn to queen.");
                     gameInstance.addBlankTile(startRow, startCol);
                     gameInstance.addWhiteQueen(endRow, endCol);
+                    MainActivity.sounds.play(4, 1, 1, 1, 0, 1.0f);//Plays sound when user moves chesspiece
+
                 } else {
                     System.out.println("Moving white pawn.");
                     gameInstance.addBlankTile(startRow, startCol);
                     gameInstance.addWhitePawn(endRow, endCol);
+                    MainActivity.sounds.play(1, 1, 1, 1, 0, 1.0f);//Plays sound when user moves chesspiece
                 }
             } else if (Math.abs(startCol - endCol) == 1 && (startRow - endRow) == 1
                     && chessGrid[startRow][startCol] == WHITE_PAWN && chessGrid[endRow][endCol] != BLANK_SQUARE) {
@@ -115,10 +130,13 @@ public class Pawn {
                     System.out.println("Promoting white pawn to queen after capturing.");
                     gameInstance.addBlankTile(startRow, startCol);
                     gameInstance.addWhiteQueen(endRow, endCol);
+                    MainActivity.sounds.play(2, 1, 1, 1, 0, 1.0f);//Plays sound when user moves chesspiece
+                    MainActivity.sounds.play(4, 1, 1, 1, 0, 1.0f);//Plays sound when user promotes pawn
                 } else {
                     System.out.println("Capturing piece with white pawn.");
                     gameInstance.addBlankTile(startRow, startCol);
                     gameInstance.addWhitePawn(endRow, endCol);
+                    MainActivity.sounds.play(2, 1, 1, 1, 0, 1.0f);//Plays sound when user moves chesspiece
                 }
             } else {
                 System.out.println("Invalid move for white pawn.");
@@ -133,16 +151,19 @@ public class Pawn {
                 System.out.println("Moving black pawn from the beginning row.");
                 gameInstance.addBlankTile(startRow, startCol);
                 gameInstance.addBlackPawn(endRow, endCol);
+                MainActivity.sounds.play(1, 1, 1, 1, 0, 1.0f);//Plays sound when user moves chesspiece
             } else if ((endRow - startRow) == 1 && startCol == endCol && chessGrid[startRow][startCol] == BLACK_PAWN
                     && chessGrid[endRow][endCol] == BLANK_SQUARE) {
                 if (endRow == 7) {
                     System.out.println("Promoting black pawn to queen.");
                     gameInstance.addBlankTile(startRow, startCol);
                     gameInstance.addBlackQueen(endRow, endCol);
+                    MainActivity.sounds.play(4, 1, 1, 1, 0, 1.0f);//Plays sound when user promotes pawn chesspiece
                 } else {
                     System.out.println("Moving black pawn.");
                     gameInstance.addBlankTile(startRow, startCol);
                     gameInstance.addBlackPawn(endRow, endCol);
+                    MainActivity.sounds.play(1, 1, 1, 1, 0, 1.0f);//Plays sound when user moves chesspiece
                 }
             } else if (Math.abs(endCol - startCol) == 1 && (endRow - startRow) == 1
                     && chessGrid[startRow][startCol] == BLACK_PAWN && chessGrid[endRow][endCol] != BLANK_SQUARE) {
@@ -150,10 +171,14 @@ public class Pawn {
                     System.out.println("Promoting black pawn to queen after capturing.");
                     gameInstance.addBlankTile(startRow, startCol);
                     gameInstance.addBlackQueen(endRow, endCol);
+                    MainActivity.sounds.play(2, 1, 1, 1, 0, 1.0f);//Plays sound when user moves chesspiece
+                    MainActivity.sounds.play(4, 1, 1, 1, 0, 1.0f);//Plays sound when user promotes chesspiece
+
                 } else {
                     System.out.println("Capturing piece with black pawn.");
                     gameInstance.addBlankTile(startRow, startCol);
                     gameInstance.addBlackPawn(endRow, endCol);
+                    MainActivity.sounds.play(2, 1, 1, 1, 0, 1.0f);//Plays sound when user moves chesspiece
                 }
             } else {
                 System.out.println("Invalid move for black pawn.");

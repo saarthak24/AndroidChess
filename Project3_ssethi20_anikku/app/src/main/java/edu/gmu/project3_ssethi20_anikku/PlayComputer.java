@@ -44,42 +44,6 @@ public class PlayComputer extends AppCompatActivity
     int destinationTileRow=-1;
     int destinationTileCol=-1;
 
-    public static SoundPool sounds;
-    private SparseIntArray soundMap;
-    private void configureSounds() {
-        createSoundPool();
-        soundMap = new SparseIntArray(5);
-
-        soundMap.put(1, sounds.load(this, R.raw.move_self, 1));
-        soundMap.put(2, sounds.load(this, R.raw.capture, 1));
-        soundMap.put(3, sounds.load(this, R.raw.game_start, 1));
-        soundMap.put(4 , sounds.load(this, R.raw.promote, 1));
-
-    }
-
-
-
-    protected void createSoundPool() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            createNewSoundPool();
-        } else {
-            createOldSoundPool();
-        }
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    protected void createNewSoundPool(){
-        sounds = new SoundPool.Builder()
-                .setMaxStreams(5)
-                .build();
-    }
-
-    @SuppressWarnings("deprecation")
-    protected void createOldSoundPool(){
-        sounds = new SoundPool(5, AudioManager.STREAM_MUSIC,0);
-    }
-
-
     private boolean chessPieceSelected = false;
     public boolean chessPieceSelected() {
         boolean result = false;
@@ -216,7 +180,7 @@ public class PlayComputer extends AppCompatActivity
 
         //ImageView kingSideTest=findViewById(R.id.imageView53);
         //kingSideTest.setImageResource(R.drawable.white_pawn_darkbg);
-        configureSounds();
+
         resetGame();
 
         for(int row = 0; row < BOARD_SIZE; row++) {
@@ -564,7 +528,7 @@ public class PlayComputer extends AppCompatActivity
         selectedPieceCol=-1;
         destinationTileRow=-1;
         destinationTileCol=-1;
-        sounds.play(3, 1, 1, 1, 0, 1.0f);//Plays sound when user starts game
+
     }
 
     public void clearSelection(View view) {
