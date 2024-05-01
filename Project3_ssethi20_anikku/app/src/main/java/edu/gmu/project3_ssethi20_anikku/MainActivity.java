@@ -17,14 +17,16 @@ public class MainActivity extends AppCompatActivity {
     private SparseIntArray soundMap;
     private void configureSounds() {
         createSoundPool();
-        soundMap = new SparseIntArray(5);
+        soundMap = new SparseIntArray(6);
 
         soundMap.put(1, sounds.load(this, R.raw.move_self, 1));
         soundMap.put(2, sounds.load(this, R.raw.capture, 1));
         soundMap.put(3, sounds.load(this, R.raw.game_start, 1));
         soundMap.put(4 , sounds.load(this, R.raw.promote, 1));
-
+        soundMap.put(5, sounds.load(this, R.raw.welcome, 1));
     }
+
+
 
     protected void createSoundPool() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     protected void createOldSoundPool(){
         sounds = new SoundPool(5, AudioManager.STREAM_MUSIC,0);
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

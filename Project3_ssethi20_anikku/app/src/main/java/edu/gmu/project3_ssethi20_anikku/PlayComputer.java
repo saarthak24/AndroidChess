@@ -19,6 +19,10 @@ import static edu.gmu.project3_ssethi20_anikku.Constants.WHITE_ROOK;
 import static edu.gmu.project3_ssethi20_anikku.Constants.getPieceName;
 
 import android.annotation.TargetApi;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
@@ -31,7 +35,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class PlayComputer extends AppCompatActivity
+public class PlayComputer extends AppCompatActivity implements SensorEventListener
 {
     TextView statusText;
     int chessGrid[][] = new int[BOARD_SIZE][BOARD_SIZE];
@@ -45,6 +49,19 @@ public class PlayComputer extends AppCompatActivity
     int destinationTileCol=-1;
 
     private boolean chessPieceSelected = false;
+
+
+    //accelerometer stuff
+    private SensorManager mSensorManager;
+    private Sensor mAccelerometer;
+    private long mLastUpdate;
+
+    private float lastAccelerationValue=0;
+    float currentAccelerationValue =0;
+
+    float normalAccelerationTolerance=10;
+
+
     public boolean chessPieceSelected() {
         boolean result = false;
         if(selectedPieceRow != -1 && selectedPieceCol != -1) {
@@ -208,7 +225,61 @@ public class PlayComputer extends AppCompatActivity
                 square.setTag(idName);
             }
         }
+
+        mLastUpdate = System.currentTimeMillis();
+        mSensorManager = (SensorManager)
+                getSystemService(SENSOR_SERVICE);
+        mAccelerometer = mSensorManager.getDefaultSensor(
+                Sensor.TYPE_ACCELEROMETER);
+
+        currentAccelerationValue=SensorManager.GRAVITY_EARTH;
+        lastAccelerationValue=SensorManager.GRAVITY_EARTH;
+        normalAccelerationTolerance=10;
+
     }
+
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            long actualTime = System.currentTimeMillis();
+            if (actualTime  - mLastUpdate > 500)  {
+                mLastUpdate = actualTime;
+                float x = event.values[0],  y = event.values[1],
+                        z = event.values[2];
+
+                lastAccelerationValue=currentAccelerationValue;
+
+                currentAccelerationValue = (float) Math.sqrt((x*x)+(y*y)+(z*z));
+                float changeInAcceleration= currentAccelerationValue - lastAccelerationValue;
+
+                //applying formula to determine shaken device
+                normalAccelerationTolerance= (float) (normalAccelerationTolerance*0.9+changeInAcceleration);
+
+                if(normalAccelerationTolerance>12)
+                {
+                    MainActivity.sounds.play(5, 1, 1, 1, 0, 1.0f);//Plays sound when user shakes device
+                }
+
+            }
+        }
+    }
+
+    public void onAccuracyChanged(Sensor sensor, int accuracy)
+    {
+
+    }
+
+
+
+    protected void onResume()  {
+        super.onResume();
+        mSensorManager.registerListener(this, mAccelerometer,
+                SensorManager.SENSOR_DELAY_NORMAL);
+    }
+    protected void onPause() {
+        mSensorManager.unregisterListener(this);
+        super.onPause();
+    }
+
 
     public ImageView returnViewById(int row, int col) {
         // Construct the resource name based on the row and column
