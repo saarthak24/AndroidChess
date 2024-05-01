@@ -38,6 +38,7 @@ public class Bishop {
         // Make sure the path is clear
         if (isPathClear(chessGrid, startRow, startCol, endRow, endCol)) {
             System.out.println("Attempting to capture: " + getPieceName((chessGrid[endRow][endCol])));
+            MainActivity.sounds.play(1, 1, 1, 1, 0, 1.0f);//Plays sound when user moves chesspiece
             if (getPieceName(chessGrid[endRow][endCol]).startsWith(isWhite ? "White" : "Black")) {
                 System.out.println(
                         "Illegal Move: You are attempting to capture one of your own pieces with your bishop.");
