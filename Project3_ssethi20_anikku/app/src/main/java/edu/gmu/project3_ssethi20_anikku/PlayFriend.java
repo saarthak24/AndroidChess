@@ -154,25 +154,6 @@ public class PlayFriend extends AppCompatActivity implements SensorEventListener
         super.onPause();
     }
 
-    public int[] getSquareIndices(String notation) {
-        // Ensure the notation is exactly two characters long
-        if (notation.length() != 2) {
-            throw new IllegalArgumentException("Invalid notation: " + notation);
-        }
-
-        // Extract the column and row from the notation
-        char columnChar = notation.charAt(0);
-        char rowChar = notation.charAt(1);
-
-        // Convert the column letter to an index (0-7)
-        int col = columnChar - 'a';
-        // Convert the row number to an index (0-7), adjusting for the reverse order
-        int row = '8' - rowChar;
-
-        // Return the row and column as a 2x1 int array
-        return new int[]{row, col};
-    }
-
     public String getSquareNotation(int row, int col) {
         char[] columnNotation = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
         char[] rowNotation = {'8', '7', '6', '5', '4', '3', '2', '1'};

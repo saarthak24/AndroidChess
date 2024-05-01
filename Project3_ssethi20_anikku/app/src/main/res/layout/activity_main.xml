@@ -26,20 +26,20 @@
         android:text="Chess is a classic board game for two players, called white and black. It is played on an 8 x 8 grid with 64 squares, each player starting with 16 pieces (1 King, 1 Queen, 2 Bishops, 2 Knights, 2 Rooks, and 8 Pawns). Each piece on the board has its own movement restrictions. White moves first, followed by black. The game is won by putting the opponent's king in checkmate, however there are several ways it can also end in a draw." />
 
     <Button
-        android:id="@+id/playAgainstComputer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Play against the computer"
-        android:onClick="playAgainstComputerClicked"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="5dp"/>
-    <Button
         android:id="@+id/playAgainstPartner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Play against a friend"
         android:onClick="playAgainstFriendClicked"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="5dp"/>
+    <Button
+        android:id="@+id/playAgainstComputer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Play against the computer"
+        android:onClick="playAgainstComputerClicked"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="5dp"
