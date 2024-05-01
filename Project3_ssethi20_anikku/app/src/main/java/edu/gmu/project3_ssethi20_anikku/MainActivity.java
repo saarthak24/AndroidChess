@@ -26,8 +26,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
     protected void createSoundPool() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             createNewSoundPool();
@@ -47,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     protected void createOldSoundPool(){
         sounds = new SoundPool(5, AudioManager.STREAM_MUSIC,0);
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

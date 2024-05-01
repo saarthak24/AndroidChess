@@ -18,9 +18,9 @@ import static edu.gmu.project3_ssethi20_anikku.Constants.WHITE_BISHOP;
 import static edu.gmu.project3_ssethi20_anikku.Constants.WHITE_ROOK;
 import static edu.gmu.project3_ssethi20_anikku.Constants.getPieceName;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -204,6 +204,32 @@ public class PlayFriend extends AppCompatActivity {
         GameHistory.saveToFirebase(new Game(formattedDateTime, outcome));
     }
 
+    private void displayResultAlert(String outcome) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Game Over");
+        builder.setMessage(outcome);
+
+        builder.setPositiveButton("Play Again", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                resetGame();
+            }
+        });
+
+        builder.setNegativeButton("Main Menu", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Navigate back to the "Main Menu"
+                Intent intent = new Intent(PlayFriend.this, MainActivity.class);
+                startActivity(intent);
+                finish(); // Close this activity
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
     public void selectMoveDestination(int row, int col) {
         System.out.println(chessPieceSelected ? "You currently have a chess piece selected." : "There is currently no chess piece selected.");
         System.out.println("Selected row: " + (selectedPieceRow+1) + ", col: " + (selectedPieceCol+1));
@@ -216,19 +242,22 @@ public class PlayFriend extends AppCompatActivity {
             int selectedPiece = chessGrid[selectedPieceRow][selectedPieceCol];
             if(movePiece(selectedPiece, selectedPieceRow, selectedPieceCol, row, col)) {
                 int gameStatus = gameOver();
+                String outcome = "";
                 switch(gameStatus) {
                     case 0:
                         updateStatusText((whiteTurn ? "White" : "Black") + " moved the " + getPieceName(selectedPiece) + " on " +  getSquareNotation(selectedPieceRow, selectedPieceCol) + " to " + getSquareNotation(row, col));
                         updateTurn();
                         break;
                     case 1:
-                        updateStatusText("Game Over! White won!"); // TODO: Display as toast or alert instead of updating status text
-                        saveGameResultToFirebase("White won!");
+                        outcome = "White won!";
+                        saveGameResultToFirebase(outcome);
+                        displayResultAlert(outcome);
                         resetGame();
                         break;
                     case -1:
-                        updateStatusText("Game Over! Black won!"); // TODO: Display as toast or alert instead of updating status text
-                        saveGameResultToFirebase("Black won!");
+                        outcome = "Black won!";
+                        saveGameResultToFirebase(outcome);
+                        displayResultAlert(outcome);
                         resetGame();
                         break;
                 }
